@@ -1,17 +1,17 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
 
 namespace AstroBot
 {
-    
+
     internal class Program
     {
         private static DiscordSocketClient _client = new DiscordSocketClient(new DiscordSocketConfig
         {
             GatewayIntents = GatewayIntents.MessageContent | GatewayIntents.AllUnprivileged
         });
+
+        private static readonly PhraseMatcher _phraseMatcher = new PhraseMatcher();
 
         static async Task Main(string[] args)
         {
@@ -43,7 +43,7 @@ namespace AstroBot
         {
             if (message.Source == MessageSource.User)
             {
-                if (Regex.IsMatch(message.Content, "A.*s.*t.*r.*o.?s?", RegexOptions.IgnoreCase))
+                if (_phraseMatcher.IsMatch(message.Content))
                 {
                     await message.AddReactionAsync(new Emoji("🖕"));
                     await message.Channel.SendMessageAsync($"Around these parts they're called the Assholes, {message.Author}.");
