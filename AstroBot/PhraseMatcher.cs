@@ -6,7 +6,7 @@ namespace AstroBot
     {
         public bool IsMatch(string message)
         {
-            return Regex.IsMatch(message, "A.*s.*t.*r.*o.?s?", RegexOptions.IgnoreCase);
+            return Regex.IsMatch(message, @"\bAstros?\b|\bYankees?\b", RegexOptions.IgnoreCase);
         }
     }
 }
